@@ -14,6 +14,7 @@
 //
 #include <fstream>
 #include <cstdio>
+#include <cctype>
 #include "param.h"
 #include "common.h"
 
