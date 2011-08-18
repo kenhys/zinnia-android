@@ -12,4 +12,3 @@ LOCAL_MODULE    := libzinniajni
 LOCAL_SRC_FILES := libzinniajni.cpp
 LOCAL_STATIC_LIBRARIES := libzinnia
 include $(BUILD_SHARED_LIBRARY)
-
