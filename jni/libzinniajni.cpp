@@ -62,6 +62,8 @@ JNIEXPORT jstring JNICALL Java_org_xdump_android_zinnia_Zinnia_zinnia_1character
 JNIEXPORT void JNICALL Java_org_xdump_android_zinnia_Zinnia_zinnia_1character_1set_1width
 (JNIEnv *env, jobject jobj, jlong character, jlong width)
 {
+    zinnia_character_t* p = reinterpret_cast<zinnia_character_t*>(character);
+    zinnia_character_set_width(p, width);
 }
 
 /*
@@ -72,6 +74,8 @@ JNIEXPORT void JNICALL Java_org_xdump_android_zinnia_Zinnia_zinnia_1character_1s
 JNIEXPORT void JNICALL Java_org_xdump_android_zinnia_Zinnia_zinnia_1character_1set_1height
 (JNIEnv *env, jobject jobj, jlong character, jlong height)
 {
+    zinnia_character_t* p = reinterpret_cast<zinnia_character_t*>(character);
+    zinnia_character_set_height(p, height);
 }
 
 /*
@@ -102,6 +106,8 @@ JNIEXPORT jlong JNICALL Java_org_xdump_android_zinnia_Zinnia_zinnia_1character_1
 JNIEXPORT void JNICALL Java_org_xdump_android_zinnia_Zinnia_zinnia_1character_1clear
 (JNIEnv *env, jobject jobj, jlong stroke)
 {
+    zinnia_character_t* p = reinterpret_cast<zinnia_character_t*>(stroke);
+    zinnia_character_clear(p);
 }
 
 /*
@@ -112,6 +118,8 @@ JNIEXPORT void JNICALL Java_org_xdump_android_zinnia_Zinnia_zinnia_1character_1c
 JNIEXPORT jint JNICALL Java_org_xdump_android_zinnia_Zinnia_zinnia_1character_1add
 (JNIEnv *env, jobject jobj, jlong character, jlong id, jint x, jint y)
 {
+    zinnia_character_t* p = reinterpret_cast<zinnia_character_t*>(character);
+    zinnia_character_add(p, id, x, y);
 }
 
 /*
@@ -200,8 +208,10 @@ JNIEXPORT jstring JNICALL Java_org_xdump_android_zinnia_Zinnia_zinnia_1character
  * Signature: (JJ)Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL Java_org_xdump_android_zinnia_Zinnia_zinnia_1result_1value
-(JNIEnv *env, jobject jobj, jlong, jlong jlongv)
+(JNIEnv *env, jobject jobj, jlong result, jlong index)
 {
+    zinnia_result_t* p = reinterpret_cast<zinnia_result_t*>(result);
+    return env->NewStringUTF(zinnia_result_value(p, index));
 }
 
 /*
@@ -210,8 +220,10 @@ JNIEXPORT jstring JNICALL Java_org_xdump_android_zinnia_Zinnia_zinnia_1result_1v
  * Signature: (JJ)F
  */
 JNIEXPORT jfloat JNICALL Java_org_xdump_android_zinnia_Zinnia_zinnia_1result_1score
-(JNIEnv *env, jobject jobj, jlong, jlong jlongv)
+(JNIEnv *env, jobject jobj, jlong result, jlong index)
 {
+    zinnia_result_t* p = reinterpret_cast<zinnia_result_t*>(result);
+    return zinnia_result_score(p, index);
 }
 
 /*
@@ -220,8 +232,10 @@ JNIEXPORT jfloat JNICALL Java_org_xdump_android_zinnia_Zinnia_zinnia_1result_1sc
  * Signature: (J)J
  */
 JNIEXPORT jlong JNICALL Java_org_xdump_android_zinnia_Zinnia_zinnia_1result_1size
-(JNIEnv *env, jobject jobj, jlong jlongv)
+(JNIEnv *env, jobject jobj, jlong result)
 {
+    zinnia_result_t* p = reinterpret_cast<zinnia_result_t*>(result);
+    return zinnia_result_size(p);
 }
 
 /*
@@ -242,6 +256,8 @@ JNIEXPORT void JNICALL Java_org_xdump_android_zinnia_Zinnia_zinnia_1result_1dest
 JNIEXPORT jlong JNICALL Java_org_xdump_android_zinnia_Zinnia_zinnia_1recognizer_1new
   (JNIEnv *env, jobject jobj)
 {
+    zinnia_recognizer_t* p = zinnia_recognizer_new();
+    return reinterpret_cast<jlong>(p);
 }
 
 /*
@@ -320,8 +336,13 @@ JNIEXPORT jstring JNICALL Java_org_xdump_android_zinnia_Zinnia_zinnia_1recognize
  * Signature: (JLjava/lang/String;J)J
  */
 JNIEXPORT jlong JNICALL Java_org_xdump_android_zinnia_Zinnia_zinnia_1recognizer_1classify
-(JNIEnv *env, jobject jobj, jlong, jstring jstr, jlong jlongv)
+(JNIEnv *env, jobject jobj, jlong recognizer, jlong character, jlong nbest)
 {
+    zinnia_recognizer_t* recog = reinterpret_cast<zinnia_recognizer_t*>(recognizer);
+    zinnia_character_t* ch = reinterpret_cast<zinnia_character_t*>(character);
+    zinnia_result_t* result = zinnia_recognizer_classify(recog, ch, nbest);
+    
+    return reinterpret_cast<jlong>(result);
 }
 
 /*

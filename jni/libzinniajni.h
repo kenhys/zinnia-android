@@ -261,7 +261,7 @@ JNIEXPORT jstring JNICALL Java_org_xdump_android_zinnia_Zinnia_zinnia_1recognize
  * Signature: (JLjava/lang/String;J)J
  */
 JNIEXPORT jlong JNICALL Java_org_xdump_android_zinnia_Zinnia_zinnia_1recognizer_1classify
-  (JNIEnv *, jobject, jlong, jstring, jlong);
+  (JNIEnv *, jobject, jlong, jlong, jlong);
 
 /*
  * Class:     org_xdump_android_zinnia_Zinnia
