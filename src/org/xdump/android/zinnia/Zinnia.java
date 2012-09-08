@@ -41,7 +41,7 @@ public class Zinnia {
 	public native String zinnia_recognizer_value(long recognizer, long i);
 	public native String         zinnia_recognizer_strerror(long recognizer);
 	public native long zinnia_recognizer_classify(long recognizer,
-			String character,
+			long character,
 			long nbest);
 
 	public native long zinnia_trainer_new();
